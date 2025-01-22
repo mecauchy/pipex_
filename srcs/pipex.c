@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mcauchy- <mcauchy-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/22 13:43:13 by mcauchy-          #+#    #+#             */
+/*   Updated: 2025/01/22 13:45:08 by mcauchy-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/pipex.h"
 
 void    first_cmd_exec(int *fd, char **av,char **env)
@@ -59,7 +71,7 @@ void pipex(int ac, char **av, char **env)
 
 int main(int ac, char **av, char **env)
 {
-    char *envp[] = {"PATH=/usr/bin", NULL};
+   // char *envp[] = {"PATH=/usr/bin", NULL};
     if (ac == 1)
         ft_error("error : arguments");
     pipex(ac, av, envp);

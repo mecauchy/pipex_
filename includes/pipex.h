@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mcauchy- <mcauchy-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/22 13:43:28 by mcauchy-          #+#    #+#             */
+/*   Updated: 2025/01/22 13:44:44 by mcauchy-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PIPEX_H
 
 # define PIPEX_H
 
-//# include "../libft/libft.h"
+# include "../libft/libft.h"
 # include <string.h>
 # include <strings.h>
 # include <unistd.h>
