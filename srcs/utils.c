@@ -6,7 +6,7 @@
 /*   By: mecauchy <mecauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:43:18 by mcauchy-          #+#    #+#             */
-/*   Updated: 2025/01/23 14:01:57 by mecauchy         ###   ########.fr       */
+/*   Updated: 2025/01/23 18:46:33 by mecauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,10 @@ char	*get_command_path(char *cmd, char **env)
 		i++;
 	}
 	if (!get_path)
+	{
 		ft_putendl_fd("Error: PATH not found", 2);
+		exit(EXIT_FAILURE);
+	}
 	path = ft_split(get_path, ':');
 	if (!path)
 		return (NULL);
