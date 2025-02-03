@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mecauchy <mecauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mcauchy- <mcauchy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/23 14:39:36 by mecauchy          #+#    #+#             */
-/*   Updated: 2025/01/23 18:50:05 by mecauchy         ###   ########.fr       */
+/*   Created: 2025/01/29 13:41:48 by mcauchy-          #+#    #+#             */
+/*   Updated: 2025/01/29 14:27:31 by mcauchy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_error(char *str)
 {
 	ft_putendl_fd(str, 2);
-	exit(1);
+	exit(EXIT_FAILURE);
 }
 
 void	ft_perror(char *str)
@@ -24,7 +24,7 @@ void	ft_perror(char *str)
 	exit(EXIT_FAILURE);
 }
 
-void	free_split(char *str)
+void	free_split(char **str)
 {
 	int	i;
 
@@ -35,4 +35,15 @@ void	free_split(char *str)
 		i++;
 	}
 	free(str);
+}
+
+int	ft_only_sep(char *str, char charset)
+{
+	while (*str)
+	{
+		if (*str != charset)
+			return (0);
+		str++;
+	}
+	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcauchy- <mcauchy-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mecauchy <mecauchy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 17:15:11 by mcauchy-          #+#    #+#             */
-/*   Updated: 2024/11/20 11:48:55 by mcauchy-         ###   ########.fr       */
+/*   Updated: 2025/01/28 18:38:59 by mecauchy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,18 @@ void	ft_lstadd_front(t_list **lst, t_list *new)
 	}
 }
 
-void	print_lst(t_list **lst)
-{
-	t_list *temp;
+// void	print_lst(t_list **lst)
+// {
+// 	t_list *temp;
 
-	temp = *lst;
-	while (temp)
-	{
-		printf("string is %s\n", (char *)temp->content);
-		temp = temp->next;
-	}
-	printf("list printed \n\n");
-}
+// 	temp = *lst;
+// 	while (temp)
+// 	{
+// 		printf("string is %s\n", (char *)temp->content);
+// 		temp = temp->next;
+// 	}
+// 	printf("list printed \n\n");
+// }
 
 /*int main (int ac, char **av)
 {

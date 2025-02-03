@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mecauchy <mecauchy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mcauchy- <mcauchy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:43:18 by mcauchy-          #+#    #+#             */
-/*   Updated: 2025/01/23 18:46:33 by mecauchy         ###   ########.fr       */
+/*   Updated: 2025/02/03 10:57:36 by mcauchy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,38 +19,34 @@ char	*ft_is_path(char *path, char *cmd)
 	int		j;
 
 	i = 0;
+	j = 0;
 	try = malloc(sizeof(char *) * (ft_strlen(path) + ft_strlen(cmd) + 2));
 	if (!try)
 		return (NULL);
 	while (path[i])
 	{
 		try[j] = path[i];
-		printf("try[%d]: %c\n", j, try[j]);
 		i++;
 		j++;
 	}
-	//j++;
 	try[j] = '/';
-	printf("try[%d]: %c\n", j, try[j]);
 	i = 0;
 	while (cmd[i])
 	{
 		try[j] = cmd[i];
-		printf("try[%d]: %c\n", j, try[j]);
-		i++;
 		j++;
+		i++;
 	}
 	try[j] = '\0';
 	return (try);
 }
-char	*get_command_path(char *cmd, char **env)
+
+char	**get_path(char **env)
 {
-	int		i;
 	char	*get_path;
-	char	*full_path;
-	char	*add_slash;
-	char	**cut_cmd;
 	char	**path;
+	int		i;
+
 	i = 0;
 	while (env[i])
 	{
@@ -62,77 +58,67 @@ char	*get_command_path(char *cmd, char **env)
 		i++;
 	}
 	if (!get_path)
-	{
-		ft_putendl_fd("Error: PATH not found", 2);
-		exit(EXIT_FAILURE);
-	}
+		ft_error("Error: path not found");
 	path = ft_split(get_path, ':');
+	if (!path)
+		exit(EXIT_FAILURE);
+	return (path);
+}
+
+char	*get_command_path(char *cmd, char **env)
+{
+	char	**path;
+	char	**cut_cmd;
+	char	*cmd_path;
+
+	if (cmd[0] == '/' || cmd[0] == '.')
+	{
+		if (access(cmd, X_OK | F_OK) == 0)
+			return (ft_strdup(cmd));
+	}
+	path = get_path(env);
 	if (!path)
 		return (NULL);
 	cut_cmd = ft_split(cmd, ' ');
 	if (!cut_cmd)
+	{
+		free_split(path);
 		return (NULL);
+	}
+	cmd_path = try_path(path, cut_cmd[0]);
+	free_split(path);
+	free_split(cut_cmd);
+	return (cmd_path);
+}
+
+char	*try_path(char **path, char *cut_cmd)
+{
+	int		i;
+	char	*full_path;
+
 	i = 0;
 	while (path[i])
 	{
-		add_slash = ft_strjoin(path[i], "/");
-		if (!add_slash)
-			ft_putendl_fd("malloc error", 2);
-		full_path = ft_strjoin(add_slash, cut_cmd[0]);
-		free(add_slash);
-		// printf("path[%d]: %s\n", i, path[i]);
-		// printf("*************full_path: %s\n", full_path);
-		// if (!full_path)
-		// 	ft_putendl_fd("malloc error", 2);
-		if (access((full_path), X_OK) == 0)
-		{
-			printf("full_path: %s\n", full_path);
-			free(path);
+		full_path = join_path(path[i], cut_cmd);
+		if (!full_path)
+			return (NULL);
+		if (access(full_path, F_OK | X_OK) == 0)
 			return (full_path);
-		}
 		free(full_path);
 		i++;
 	}
-	free(path);
 	return (NULL);
 }
 
-// char	*get_command_path(char *cmd, char **env)
-// {
-// 	int		i;
-// 	char	*get_path;
-// 	char	*full_path;
-// 	char	**path;
-// 	i = 0;
-// 	while (env[i])
-// 	{
-// 		if (ft_strncmp(env[i], "PATH=", 5) == 0)
-// 		{
-// 			get_path = env[i] + 5;
-// 			break ;
-// 		}
-// 		i++;
-// 	}
-// 	if (!get_path)
-// 		ft_putendl_fd("Error: PATH not found", 2);
-// 	path = ft_split(get_path, ':');
-// 	i = 0;
-// 	while (path[i])
-// 	{
-// 		full_path = ft_is_path(path[i], cmd);
-// 		printf("path[%d]: %s\n", i, path[i]);
-// 		printf("*************full_path: %s\n", full_path);
-// 		if (!full_path)
-// 			ft_putendl_fd("malloc error", 2);
-// 		if (access((full_path), X_OK) == 0)
-// 		{
-// 			printf("full_path: %s\n", full_path);
-// 			free(path);
-// 			return (full_path);
-// 		}
-// 		free(full_path);
-// 		i++;
-// 	}
-// 	free(path);
-// 	return (NULL);
-// }
+char	*join_path(char *path, char *cut_cmd)
+{
+	char	*add_slash;
+	char	*full_path;
+
+	add_slash = ft_strjoin(path, "/");
+	if (!add_slash)
+		return (NULL);
+	full_path = ft_strjoin(add_slash, cut_cmd);
+	free(add_slash);
+	return (full_path);
+}
